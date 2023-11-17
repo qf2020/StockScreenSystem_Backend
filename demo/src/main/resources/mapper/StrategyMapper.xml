@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cjk.bakend.demo.mapper.StrategyMapper">
+  <resultMap id="BaseResultMap" type="com.cjk.bakend.demo.pojo.Strategy">
+    <id column="strategy_id" jdbcType="BIGINT" property="strategyId" />
+    <result column="filter_stock_id" jdbcType="BIGINT" property="filterStockId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="strategy_date" jdbcType="TIMESTAMP" property="strategyDate" />
+    <result column="open_price" jdbcType="DOUBLE" property="openPrice" />
+    <result column="close_price" jdbcType="DOUBLE" property="closePrice" />
+    <result column="high_price" jdbcType="DOUBLE" property="highPrice" />
+    <result column="low_price" jdbcType="DOUBLE" property="lowPrice" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    strategy_id, filter_stock_id, user_id, strategy_date, open_price, close_price, high_price, 
+    low_price
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from strategy
+    where strategy_id = #{strategyId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from strategy
+    where strategy_id = #{strategyId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.cjk.bakend.demo.pojo.Strategy">
+    insert into strategy (strategy_id, filter_stock_id, user_id, 
+      strategy_date, open_price, close_price, 
+      high_price, low_price)
+    values (#{strategyId,jdbcType=BIGINT}, #{filterStockId,jdbcType=BIGINT}, #{userId,jdbcType=INTEGER}, 
+      #{strategyDate,jdbcType=TIMESTAMP}, #{openPrice,jdbcType=DOUBLE}, #{closePrice,jdbcType=DOUBLE}, 
+      #{highPrice,jdbcType=DOUBLE}, #{lowPrice,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cjk.bakend.demo.pojo.Strategy">
+    insert into strategy
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="strategyId != null">
+        strategy_id,
+      </if>
+      <if test="filterStockId != null">
+        filter_stock_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="strategyDate != null">
+        strategy_date,
+      </if>
+      <if test="openPrice != null">
+        open_price,
+      </if>
+      <if test="closePrice != null">
+        close_price,
+      </if>
+      <if test="highPrice != null">
+        high_price,
+      </if>
+      <if test="lowPrice != null">
+        low_price,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="strategyId != null">
+        #{strategyId,jdbcType=BIGINT},
+      </if>
+      <if test="filterStockId != null">
+        #{filterStockId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="strategyDate != null">
+        #{strategyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="openPrice != null">
+        #{openPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="closePrice != null">
+        #{closePrice,jdbcType=DOUBLE},
+      </if>
+      <if test="highPrice != null">
+        #{highPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="lowPrice != null">
+        #{lowPrice,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cjk.bakend.demo.pojo.Strategy">
+    update strategy
+    <set>
+      <if test="filterStockId != null">
+        filter_stock_id = #{filterStockId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="strategyDate != null">
+        strategy_date = #{strategyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="openPrice != null">
+        open_price = #{openPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="closePrice != null">
+        close_price = #{closePrice,jdbcType=DOUBLE},
+      </if>
+      <if test="highPrice != null">
+        high_price = #{highPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="lowPrice != null">
+        low_price = #{lowPrice,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where strategy_id = #{strategyId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cjk.bakend.demo.pojo.Strategy">
+    update strategy
+    set filter_stock_id = #{filterStockId,jdbcType=BIGINT},
+      user_id = #{userId,jdbcType=INTEGER},
+      strategy_date = #{strategyDate,jdbcType=TIMESTAMP},
+      open_price = #{openPrice,jdbcType=DOUBLE},
+      close_price = #{closePrice,jdbcType=DOUBLE},
+      high_price = #{highPrice,jdbcType=DOUBLE},
+      low_price = #{lowPrice,jdbcType=DOUBLE}
+    where strategy_id = #{strategyId,jdbcType=BIGINT}
+  </update>
+</mapper>

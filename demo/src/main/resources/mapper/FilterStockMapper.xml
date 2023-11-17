@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cjk.bakend.demo.mapper.FilterStockMapper">
+  <resultMap id="BaseResultMap" type="com.cjk.bakend.demo.pojo.FilterStock">
+    <id column="filter_stock_id" jdbcType="BIGINT" property="filterStockId" />
+    <result column="stock_id" jdbcType="BIGINT" property="stockId" />
+    <result column="filter_stock_category" jdbcType="INTEGER" property="filterStockCategory" />
+    <result column="filter_stock_type" jdbcType="INTEGER" property="filterStockType" />
+    <result column="filter_stock_start_date" jdbcType="TIMESTAMP" property="filterStockStartDate" />
+    <result column="filter_stock_end_date" jdbcType="TIMESTAMP" property="filterStockEndDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    filter_stock_id, stock_id, filter_stock_category, filter_stock_type, filter_stock_start_date, 
+    filter_stock_end_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from filter_stock
+    where filter_stock_id = #{filterStockId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from filter_stock
+    where filter_stock_id = #{filterStockId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.cjk.bakend.demo.pojo.FilterStock">
+    insert into filter_stock (filter_stock_id, stock_id, filter_stock_category, 
+      filter_stock_type, filter_stock_start_date, 
+      filter_stock_end_date)
+    values (#{filterStockId,jdbcType=BIGINT}, #{stockId,jdbcType=BIGINT}, #{filterStockCategory,jdbcType=INTEGER}, 
+      #{filterStockType,jdbcType=INTEGER}, #{filterStockStartDate,jdbcType=TIMESTAMP}, 
+      #{filterStockEndDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cjk.bakend.demo.pojo.FilterStock">
+    insert into filter_stock
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="filterStockId != null">
+        filter_stock_id,
+      </if>
+      <if test="stockId != null">
+        stock_id,
+      </if>
+      <if test="filterStockCategory != null">
+        filter_stock_category,
+      </if>
+      <if test="filterStockType != null">
+        filter_stock_type,
+      </if>
+      <if test="filterStockStartDate != null">
+        filter_stock_start_date,
+      </if>
+      <if test="filterStockEndDate != null">
+        filter_stock_end_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="filterStockId != null">
+        #{filterStockId,jdbcType=BIGINT},
+      </if>
+      <if test="stockId != null">
+        #{stockId,jdbcType=BIGINT},
+      </if>
+      <if test="filterStockCategory != null">
+        #{filterStockCategory,jdbcType=INTEGER},
+      </if>
+      <if test="filterStockType != null">
+        #{filterStockType,jdbcType=INTEGER},
+      </if>
+      <if test="filterStockStartDate != null">
+        #{filterStockStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="filterStockEndDate != null">
+        #{filterStockEndDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cjk.bakend.demo.pojo.FilterStock">
+    update filter_stock
+    <set>
+      <if test="stockId != null">
+        stock_id = #{stockId,jdbcType=BIGINT},
+      </if>
+      <if test="filterStockCategory != null">
+        filter_stock_category = #{filterStockCategory,jdbcType=INTEGER},
+      </if>
+      <if test="filterStockType != null">
+        filter_stock_type = #{filterStockType,jdbcType=INTEGER},
+      </if>
+      <if test="filterStockStartDate != null">
+        filter_stock_start_date = #{filterStockStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="filterStockEndDate != null">
+        filter_stock_end_date = #{filterStockEndDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where filter_stock_id = #{filterStockId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cjk.bakend.demo.pojo.FilterStock">
+    update filter_stock
+    set stock_id = #{stockId,jdbcType=BIGINT},
+      filter_stock_category = #{filterStockCategory,jdbcType=INTEGER},
+      filter_stock_type = #{filterStockType,jdbcType=INTEGER},
+      filter_stock_start_date = #{filterStockStartDate,jdbcType=TIMESTAMP},
+      filter_stock_end_date = #{filterStockEndDate,jdbcType=TIMESTAMP}
+    where filter_stock_id = #{filterStockId,jdbcType=BIGINT}
+  </update>
+</mapper>

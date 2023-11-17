@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cjk.bakend.demo.mapper.StockTransactionMapper">
+  <resultMap id="BaseResultMap" type="com.cjk.bakend.demo.pojo.StockTransaction">
+    <id column="stock_transaction_id" jdbcType="BIGINT" property="stockTransactionId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="stock_id" jdbcType="BIGINT" property="stockId" />
+    <result column="trasaction_type" jdbcType="INTEGER" property="trasactionType" />
+    <result column="profit" jdbcType="DOUBLE" property="profit" />
+    <result column="transaction_date" jdbcType="TIMESTAMP" property="transactionDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    stock_transaction_id, user_id, stock_id, trasaction_type, profit, transaction_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from stock_transaction
+    where stock_transaction_id = #{stockTransactionId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from stock_transaction
+    where stock_transaction_id = #{stockTransactionId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.cjk.bakend.demo.pojo.StockTransaction">
+    insert into stock_transaction (stock_transaction_id, user_id, stock_id, 
+      trasaction_type, profit, transaction_date
+      )
+    values (#{stockTransactionId,jdbcType=BIGINT}, #{userId,jdbcType=INTEGER}, #{stockId,jdbcType=BIGINT}, 
+      #{trasactionType,jdbcType=INTEGER}, #{profit,jdbcType=DOUBLE}, #{transactionDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.cjk.bakend.demo.pojo.StockTransaction">
+    insert into stock_transaction
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="stockTransactionId != null">
+        stock_transaction_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="stockId != null">
+        stock_id,
+      </if>
+      <if test="trasactionType != null">
+        trasaction_type,
+      </if>
+      <if test="profit != null">
+        profit,
+      </if>
+      <if test="transactionDate != null">
+        transaction_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="stockTransactionId != null">
+        #{stockTransactionId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="stockId != null">
+        #{stockId,jdbcType=BIGINT},
+      </if>
+      <if test="trasactionType != null">
+        #{trasactionType,jdbcType=INTEGER},
+      </if>
+      <if test="profit != null">
+        #{profit,jdbcType=DOUBLE},
+      </if>
+      <if test="transactionDate != null">
+        #{transactionDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cjk.bakend.demo.pojo.StockTransaction">
+    update stock_transaction
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="stockId != null">
+        stock_id = #{stockId,jdbcType=BIGINT},
+      </if>
+      <if test="trasactionType != null">
+        trasaction_type = #{trasactionType,jdbcType=INTEGER},
+      </if>
+      <if test="profit != null">
+        profit = #{profit,jdbcType=DOUBLE},
+      </if>
+      <if test="transactionDate != null">
+        transaction_date = #{transactionDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where stock_transaction_id = #{stockTransactionId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cjk.bakend.demo.pojo.StockTransaction">
+    update stock_transaction
+    set user_id = #{userId,jdbcType=INTEGER},
+      stock_id = #{stockId,jdbcType=BIGINT},
+      trasaction_type = #{trasactionType,jdbcType=INTEGER},
+      profit = #{profit,jdbcType=DOUBLE},
+      transaction_date = #{transactionDate,jdbcType=TIMESTAMP}
+    where stock_transaction_id = #{stockTransactionId,jdbcType=BIGINT}
+  </update>
+</mapper>

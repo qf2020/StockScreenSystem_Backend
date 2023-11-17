@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cjk.bakend.demo.mapper.StockMapper">
+  <resultMap id="BaseResultMap" type="com.cjk.bakend.demo.pojo.Stock">
+    <id column="stock_id" jdbcType="BIGINT" property="stockId" />
+    <result column="stock_code" jdbcType="VARCHAR" property="stockCode" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    stock_id, stock_code
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from stock
+    where stock_id = #{stockId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from stock
+    where stock_id = #{stockId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.cjk.bakend.demo.pojo.Stock">
+    insert into stock (stock_id, stock_code)
+    values (#{stockId,jdbcType=BIGINT}, #{stockCode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cjk.bakend.demo.pojo.Stock">
+    insert into stock
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="stockId != null">
+        stock_id,
+      </if>
+      <if test="stockCode != null">
+        stock_code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="stockId != null">
+        #{stockId,jdbcType=BIGINT},
+      </if>
+      <if test="stockCode != null">
+        #{stockCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cjk.bakend.demo.pojo.Stock">
+    update stock
+    <set>
+      <if test="stockCode != null">
+        stock_code = #{stockCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where stock_id = #{stockId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cjk.bakend.demo.pojo.Stock">
+    update stock
+    set stock_code = #{stockCode,jdbcType=VARCHAR}
+    where stock_id = #{stockId,jdbcType=BIGINT}
+  </update>
+</mapper>
