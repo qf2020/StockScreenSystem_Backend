@@ -6,12 +6,14 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.annotation.RequestScope;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.cjk.bakend.demo.pojo.SecurityUserDetails;
 import com.cjk.bakend.demo.pojo.User;
 import com.cjk.bakend.demo.service.UserService;
 import com.cjk.bakend.demo.utils.JwtUtils;
+import com.cjk.bakend.demo.utils.RedisUtils;
 
 import jakarta.annotation.Resource;
 import jakarta.servlet.FilterChain;
@@ -32,6 +34,9 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter{
     @Resource
     UserService userService;
 
+    @Resource
+    RedisUtils redisUtils;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
@@ -48,8 +53,12 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter{
             filterChain.doFilter(request, response);
             return;
         }
-        
-        String userId = jwtUtils.getSubjectByToken(authToken);
+        Long ttl = redisUtils.getExpire(authToken);
+        //刷新token放到response中
+        if(ttl!=null && ttl<24*60*60){
+            response.addHeader(AUTH_HEADER, AUTH_HEADER_TYPE+authToken);
+        }
+        String userId = String.valueOf(redisUtils.get(authToken));
         User user = userService.selectByPrimaryKey(Long.valueOf(userId));
 
         UsernamePasswordAuthenticationToken authentication =

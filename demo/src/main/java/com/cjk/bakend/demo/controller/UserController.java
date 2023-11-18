@@ -45,7 +45,7 @@ public class UserController {
         if (!code.equals(redisUtils.hget("CaptchaCode",key))){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Result.fail("验证码错误"));
         }
-        
+        redisUtils.hdel("CaptchaCode", key);
         //认证操作
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
                 new UsernamePasswordAuthenticationToken(phone, password);
@@ -53,6 +53,7 @@ public class UserController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         //认证成功，颁发令牌
         String token = jwtUtils.generateToken(authentication.getName());
+        redisUtils.set(token, authentication.getName(), 7*24*60*60);
         return ResponseEntity.status(HttpStatus.OK).body(Result.succ(token));
     }
     @GetMapping("/info")
