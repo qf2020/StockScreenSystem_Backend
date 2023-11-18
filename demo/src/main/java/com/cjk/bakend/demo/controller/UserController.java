@@ -63,6 +63,4 @@ public class UserController {
         User user = userService.selectByPrimaryKey(userId);
         return ResponseEntity.status(HttpStatus.OK).body(Result.succ(user));
     }
-
-
 }

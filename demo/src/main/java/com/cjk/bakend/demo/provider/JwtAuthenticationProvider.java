@@ -38,7 +38,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider{
         
         UserDetails userDetails = userDetailsService.loadUserByUsername(userName);
         if(!userDetails.isEnabled()){
-            throw new UsernameNotFoundException ("用户没找到");
+            throw new BadCredentialsException ("用户没找到");
         }else if (!password.equals(userDetails.getPassword())) {
             throw new BadCredentialsException("密码错误");
         }else{
