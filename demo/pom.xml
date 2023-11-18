@@ -58,6 +58,11 @@
             <artifactId>spring-boot-starter-log4j2</artifactId>
         </dependency>
 
+		<dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+		
 		<!--json web token-->
 		<dependency>
             <groupId>io.jsonwebtoken</groupId>
@@ -92,7 +97,7 @@
 		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis</artifactId>
-			<version>3.4.6</version>
+			<version>3.5.1</version>
 		</dependency>
 		<!--Json-->
 		<dependency>

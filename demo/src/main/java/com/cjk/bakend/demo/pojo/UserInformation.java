@@ -2,6 +2,7 @@ package com.cjk.bakend.demo.pojo;
 
 import java.io.Serializable;
 
+
 public class UserInformation implements Serializable{
     private String userName;
 

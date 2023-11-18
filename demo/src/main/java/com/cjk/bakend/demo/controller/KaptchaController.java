@@ -4,6 +4,8 @@ import com.cjk.bakend.demo.pojo.Result;
 import com.cjk.bakend.demo.utils.RedisUtils;
 import com.google.code.kaptcha.Producer;
 
+import lombok.extern.slf4j.Slf4j;
+
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +27,7 @@ import java.util.UUID;
  * 验证码获取控制器
  * @author Administrator
  */
+@Slf4j
 @Controller
 public class KaptchaController {
 
@@ -51,6 +54,7 @@ public class KaptchaController {
         Map<String, Object> map = new HashMap<>();
         map.put("codeKey", key);
         map.put("codeImage", base64Img);
+        log.info("Log:{/captcha:"+" key: "+key+" code: "+code+"}");
         return ResponseEntity.status(HttpStatus.OK).body(Result.succ(map));
     }
 

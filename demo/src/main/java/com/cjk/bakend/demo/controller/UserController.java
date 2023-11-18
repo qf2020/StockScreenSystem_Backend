@@ -61,6 +61,7 @@ public class UserController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Long userId = Long.valueOf(authentication.getName());
         User user = userService.selectByPrimaryKey(userId);
+        //System.out.println(user.getUserInformation().getUserName());
         return ResponseEntity.status(HttpStatus.OK).body(Result.succ(user));
     }
 }

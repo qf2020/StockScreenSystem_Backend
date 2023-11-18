@@ -13,8 +13,16 @@
     <id column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="user_phone" jdbcType="VARCHAR" property="userPhone" />
     <result column="user_password" jdbcType="VARCHAR" property="userPassword" />
-    <!-- <associate property="userInformation" javaType="com.cjk.bakend.demo.pojo.UserInformation",column="userId" select="selectUserInformationByUserId" /> -->
+    <association property="userInformation" column="user_id" javaType="com.cjk.bakend.demo.pojo.UserInformation" select="selectUserInformationByUserId"
+      >
+      <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    </association>
   </resultMap>
+
+  <resultMap id="UserInformationMap" type="com.cjk.bakend.demo.pojo.UserInformation">
+        <result column="user_name" jdbcType="VARCHAR" property="userName" />
+  </resultMap>
+
 
   <sql id="Base_Column_List">
     user_id, user_phone, user_password, role
@@ -26,11 +34,11 @@
     <include refid="Base_Column_List"/>
     from user where user_phone=#{userPhone}
   </select>
-  <select id="selectUserInformationByUserId" parameterType="INTEGER">
-    select user_information from user_information where user_id = #{userId}
+  <select id="selectUserInformationByUserId" parameterType="INTEGER" resultMap="UserInformationMap">
+    select user_name from user_Information where user_id = #{user_id}
   </select>
 
-  <select id="selectByPrimaryKey" parameterType="Long" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="Long" resultMap="UserItemsMap">
     select 
     <include refid="Base_Column_List" />
     from user

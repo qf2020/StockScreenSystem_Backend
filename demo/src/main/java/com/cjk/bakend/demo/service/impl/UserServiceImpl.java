@@ -1,9 +1,5 @@
 package com.cjk.bakend.demo.service.impl;
 
-import java.util.List;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.stereotype.Service;
 
 import com.cjk.bakend.demo.mapper.UserMapper;
