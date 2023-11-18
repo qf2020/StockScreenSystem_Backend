@@ -51,7 +51,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception{
 
         httpSecurity.authorizeHttpRequests(authorize -> authorize
-            .requestMatchers("/login").permitAll()
+            .requestMatchers("/login","captcha").permitAll()
             .anyRequest().authenticated());
 
         //添加自定义provider

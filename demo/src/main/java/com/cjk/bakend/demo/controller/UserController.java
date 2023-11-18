@@ -9,7 +9,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,6 +18,8 @@ import com.cjk.bakend.demo.pojo.Result;
 import com.cjk.bakend.demo.pojo.User;
 import com.cjk.bakend.demo.service.UserService;
 import com.cjk.bakend.demo.utils.JwtUtils;
+import com.cjk.bakend.demo.utils.RedisUtils;
+
 import jakarta.annotation.Resource;
 
 @Controller
@@ -28,18 +29,23 @@ public class UserController {
     UserService userService;
 
     @Resource
-    UserDetailsService userDetailsService;
+    AuthenticationManager authenticationManager;
 
     @Resource
-    AuthenticationManager authenticationManager;
+    RedisUtils redisUtils;
 
     @Resource
     JwtUtils jwtUtils;
 
     @GetMapping("/login")
     
-    public ResponseEntity<Result> login(@RequestParam("phone")String phone,@RequestParam("password")String password){
+    public ResponseEntity<Result> login(@RequestParam("phone")String phone,@RequestParam("password")String password,@RequestParam("key")String key,
+            @RequestParam("code")String code){
 
+        if (!code.equals(redisUtils.hget("CaptchaCode",key))){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Result.fail("验证码错误"));
+        }
+        
         //认证操作
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
                 new UsernamePasswordAuthenticationToken(phone, password);
@@ -56,4 +62,6 @@ public class UserController {
         User user = userService.selectByPrimaryKey(userId);
         return ResponseEntity.status(HttpStatus.OK).body(Result.succ(user));
     }
+
+
 }
