@@ -6,4 +6,5 @@ import com.cjk.bakend.demo.pojo.User;
 public interface UserService {
     public User selectByPhone(String phone);
     public User selectByPrimaryKey(Long userId);
+    public int insertSelective(User user);
 }

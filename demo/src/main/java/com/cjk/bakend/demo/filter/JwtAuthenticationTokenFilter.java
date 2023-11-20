@@ -56,6 +56,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter{
             filterChain.doFilter(request, response);
             return;
         }
+        
         Long ttl = redisUtils.getExpire(authToken);
         //刷新token放到response中
         if(ttl!=null && ttl<24*60*60){

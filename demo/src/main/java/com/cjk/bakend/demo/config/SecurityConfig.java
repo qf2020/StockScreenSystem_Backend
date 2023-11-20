@@ -50,7 +50,8 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception{
 
-        httpSecurity.authorizeHttpRequests(authorize -> authorize
+        httpSecurity.csrf(curCsrf->curCsrf.disable())
+            .authorizeHttpRequests(authorize -> authorize
             .requestMatchers("/login","captcha").permitAll()
             .anyRequest().authenticated());
 
@@ -60,6 +61,7 @@ public class SecurityConfig {
         httpSecurity.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
         httpSecurity.exceptionHandling(authorize -> authorize
             .authenticationEntryPoint(unAuthenticationHandler));   
+
 
         httpSecurity.exceptionHandling(authorize -> authorize
             .accessDeniedHandler(myAccessDeniedHandler)); 

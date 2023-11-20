@@ -51,9 +51,11 @@ public class KaptchaController {
         String base64Img = str + base64Image;
 
         redisUtils.hset("CaptchaCode", key, code, 120);
+        
         Map<String, Object> map = new HashMap<>();
         map.put("codeKey", key);
         map.put("codeImage", base64Img);
+        
         log.info("Log:{/captcha:"+" key: "+key+" code: "+code+"}");
         return ResponseEntity.status(HttpStatus.OK).body(Result.succ(map));
     }
