@@ -72,8 +72,8 @@ public class UserController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Long userId = Long.valueOf(authentication.getName());
         User user = userService.selectByPrimaryKey(userId);
-        //System.out.println(user.getUserInformation().getUserName());
         return ResponseEntity.status(HttpStatus.OK).body(Result.succ(user));
+        
     }
 
     @PostMapping("/logout")
@@ -83,40 +83,12 @@ public class UserController {
     }
 
 
+    //修改意见：应该弄到service中处理
+    //mapper中insert接口还要更改。还得处理注册账户，用户信息不能为空的情况
+    //
     @PostMapping("/register")
     public ResponseEntity<Result> register(@RequestParam("phone")String phone,@RequestParam("password")String password,@RequestParam("role")String role){
-        ReentrantLock lock = new ReentrantLock();
-        lock.lock();
-        try {
-            //查询当前账号是否存在
-            User user = userService.selectByPhone(phone);
-            if (user !=null){
-                return ResponseEntity.badRequest().body(Result.fail("当前账号已经存在，请更换账号"));
-            }else{
-                user = new User();
-                user.setUserPhone(phone);
-                //前端解码
-                String pwd = RSAUtils.decryptByPrivate(password, RsaProperties.privateKey);
-                //SpringSecurity 密码编码
-                String encodePwd = passwordEncoder.encode(pwd);
-                user.setUserPassword(encodePwd);
-                user.setRole(role);
-            }
-            //SpringSecurity 密码编码
-            //注册
-            try {
-                userService.insertSelective(user);
-                return ResponseEntity.ok().body(Result.succ("创建成功"));//这里应该返回token的
-            } catch (Exception e) {
-                // TODO: handle exception
-                return ResponseEntity.badRequest().body(Result.fail("系统异常"));
-            }
-            
-
-        }finally {
-            lock.unlock();
-        }
-
+        return ResponseEntity.ok().body(userService.register(phone, password, role));
     }
 
     

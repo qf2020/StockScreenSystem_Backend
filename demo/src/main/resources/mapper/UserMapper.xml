@@ -44,6 +44,9 @@
     from user
     where user_id = #{userId}
   </select>
+
+  <
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from user
     where user_id = #{userId,jdbcType=INTEGER}
@@ -54,7 +57,7 @@
     values (#{userId,jdbcType=INTEGER}, #{userPhone,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.cjk.bakend.demo.pojo.User">
+  <insert id="insertSelective" parameterType="com.cjk.bakend.demo.pojo.User" keyProperty="userId" useGeneratedKeys="true">
     insert into user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="userId != null">
@@ -96,5 +99,11 @@
     set user_phone = #{userPhone,jdbcType=VARCHAR},
       user_password = #{userPassword,jdbcType=VARCHAR}
     where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+
+  <update id="checkUnique" parameterType="String">
+    update user
+    set version = version+1 
+    where user_name=#{userName} and  version = 0
   </update>
 </mapper>

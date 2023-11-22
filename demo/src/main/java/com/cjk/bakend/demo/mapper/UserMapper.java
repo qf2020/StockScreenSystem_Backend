@@ -10,6 +10,8 @@ public interface UserMapper {
 
     int insertSelective(User record);
 
+    int checkUnique(String userName);
+
     User selectByPrimaryKey(Long userId);
 
     int updateByPrimaryKeySelective(User record);

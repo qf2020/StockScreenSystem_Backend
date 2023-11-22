@@ -14,6 +14,8 @@ public class User implements Serializable {
 
     private String role;
 
+    private Integer version;
+
     private static final long serialVersionUID = 1L;
 
     public Long getUserId() {
@@ -55,4 +57,13 @@ public class User implements Serializable {
     public String getRole() {
         return role;
     }
+
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
+    
 }
