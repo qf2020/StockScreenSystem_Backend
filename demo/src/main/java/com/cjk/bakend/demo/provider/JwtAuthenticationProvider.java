@@ -1,7 +1,6 @@
 package com.cjk.bakend.demo.provider;
 
 
-import javax.naming.NameNotFoundException;
 
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -38,7 +37,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider{
         UserDetails userDetails = userDetailsService.loadUserByUsername(userName);
         if(!userDetails.isEnabled()){
             throw new BadCredentialsException ("用户没找到");
-        }else if (passwordEncoder.matches(password, userDetails.getPassword())) {
+        }else if (!passwordEncoder.matches(password, userDetails.getPassword())) {
             throw new BadCredentialsException("密码错误");
         }else{
             User user = userService.selectByPhone(userName);

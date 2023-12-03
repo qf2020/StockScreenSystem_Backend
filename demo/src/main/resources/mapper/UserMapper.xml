@@ -13,6 +13,8 @@
     <id column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="user_phone" jdbcType="VARCHAR" property="userPhone" />
     <result column="user_password" jdbcType="VARCHAR" property="userPassword" />
+    <result column="user_role" jdbcType="VARCHAR" property="role" />
+    <result column="user_version" jdbcType="INTEGER" property="userVersion" />
     <association property="userInformation" column="user_id" javaType="com.cjk.bakend.demo.pojo.UserInformation" select="selectUserInformationByUserId"
       >
       <result column="user_name" jdbcType="VARCHAR" property="userName" />
@@ -20,12 +22,19 @@
   </resultMap>
 
   <resultMap id="UserInformationMap" type="com.cjk.bakend.demo.pojo.UserInformation">
-        <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <id column="user_Information_id" jdbcType="INTEGER" property="userInformationId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="user_sex" jdbcType="INTEGER" property="userSex" />
+    <result column="user_age" jdbcType="INTEGER" property="userAge" />
+    <result column="user_mail" jdbcType="VARCHAR" property="userEmail" />
   </resultMap>
 
 
   <sql id="Base_Column_List">
-    user_id, user_phone, user_password, role
+    user_id, user_phone, user_password, user_role, user_version
+  </sql>
+  <sql id="Base_Column_List_info">
+    user_Information_id, user_name,user_sex,user_age,user_mail
   </sql>
 
   <!--关联查询的select代码-->
@@ -35,7 +44,9 @@
     from user where user_phone=#{userPhone}
   </select>
   <select id="selectUserInformationByUserId" parameterType="INTEGER" resultMap="UserInformationMap">
-    select user_name from user_Information where user_id = #{user_id}
+    select
+    <include refid="Base_Column_List_info"/> 
+    from user_Information where user_id = #{user_id}
   </select>
 
   <select id="selectByPrimaryKey" parameterType="Long" resultMap="UserItemsMap">
@@ -45,7 +56,7 @@
     where user_id = #{userId}
   </select>
 
-  <
+
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from user
@@ -69,6 +80,12 @@
       <if test="userPassword != null">
         user_password,
       </if>
+      <if test="role != null">
+        user_role,
+      </if>
+      <if test="userVersion != null">
+        user_version,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="userId != null">
@@ -80,30 +97,30 @@
       <if test="userPassword != null">
         #{userPassword,jdbcType=VARCHAR},
       </if>
+      <if test="role != null">
+        #{role,jdbcType=VARCHAR},
+      </if>
+      <if test="userVersion != null">
+        #{userVersion,jdbcType=INTEGER},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.cjk.bakend.demo.pojo.User">
     update user
     <set>
-      <if test="userPhone != null">
-        user_phone = #{userPhone,jdbcType=VARCHAR},
-      </if>
       <if test="userPassword != null">
         user_password = #{userPassword,jdbcType=VARCHAR},
       </if>
+      <if test="version != null">
+        user_version = user_version+1,
+      </if>
     </set>
-    where user_id = #{userId,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.cjk.bakend.demo.pojo.User">
-    update user
-    set user_phone = #{userPhone,jdbcType=VARCHAR},
-      user_password = #{userPassword,jdbcType=VARCHAR}
-    where user_id = #{userId,jdbcType=INTEGER}
+    where user_id = #{userId,jdbcType=INTEGER} and user_version = #{userVersion}
   </update>
 
   <update id="checkUnique" parameterType="String">
     update user
-    set version = version+1 
-    where user_name=#{userName} and  version = 0
+      set user_version = user_version+1 
+    where user_phone=#{userPhone} and  user_version = 0
   </update>
 </mapper>

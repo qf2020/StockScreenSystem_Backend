@@ -8,15 +8,13 @@ public interface UserMapper {
 
     int insert(User record);
 
-    int insertSelective(User record);
+    int insertSelective(User user);
 
     int checkUnique(String userName);
 
     User selectByPrimaryKey(Long userId);
 
     int updateByPrimaryKeySelective(User record);
-
-    int updateByPrimaryKey(User record);
 
     User selectByPhone(String userPhone);
 }

@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Component;
 
 import com.cjk.bakend.demo.constant.RsaProperties;
 import com.cjk.bakend.demo.utils.RSAUtils;
@@ -23,6 +24,7 @@ import com.cjk.bakend.demo.utils.RSAUtils;
 
  */
 @NoArgsConstructor
+@Component
 public class PasswordEncoder extends BCryptPasswordEncoder {
 
     //private String pwds = "";

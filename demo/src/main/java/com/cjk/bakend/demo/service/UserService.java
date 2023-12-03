@@ -9,4 +9,5 @@ public interface UserService {
     public User selectByPhone(String phone);
     public User selectByPrimaryKey(Long userId);
     public Result register(String phone,String password,String role) throws MyException;
+    public int changePassword(User user);
 }

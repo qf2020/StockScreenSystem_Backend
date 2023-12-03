@@ -370,36 +370,35 @@ public class RSAUtils {
     /**
      * 测试方法
      */
-    public static void main(String[] args) {
-        Map<String, Object> map;
-        map = RSAUtils.init();
-        String  publicKey= RSAUtils.getPublicKey(map);
-        String  privateKey= RSAUtils.getPrivateKey(map);
-        System.out.println("publicKey = " + publicKey);
-        System.out.println("privateKey = " + privateKey);
-        //System.out.println(formatStr(publicKey, true));
-        //System.out.println(formatStr(privateKey, false));
-        //由前四行代码获得公、私密钥
-        String str = "t136931283";
+    // public static void main(String[] args) {
+        
+    //     String  privateKey= "MIIBVAIBADANBgkqhkiG9w0BAQEFAASCAT4wggE6AgEAAkEAleOM3njO5iBH1eX9XFC7rdf0+CsIQ1/wL2PtZzIH/5/xzLfNCYhbeHT9q7DWgqtzF43Pyty1oWwGI0jsFmVO4wIDAQABAkACIkQuIqAnbIw5QlXyC4AwgGOPaOVsOCBuPEjz8CVnATVXIWCCMgItFnlhuDtkP0NvcyDnyFtnRkStsePP+IC5AiEAxfLClg6/aJgATyoxkyv9wgt61BxmYIq1Go+R8/lSfSUCIQDB2Knbuim0Sna/dubzFksAJfxi38d/uCRph3xi4xeRZwIgEDLMb6EnUrTVmaTXR7ba3i04UPE+A3p2VYUYKYHmmS0CIFrLylvyKeCZ1F9AKVMJSR4LrNj/KmnHbb7ESF3lMr/XAiEAw1+ONco8tH/qfObcde0aNQn5dx/MXQal67xMypfeLn8=";
+    //     String  publicKey= "MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJXjjN54zuYgR9Xl/VxQu63X9PgrCENf8C9j7WcyB/+f8cy3zQmIW3h0/auw1oKrcxeNz8rctaFsBiNI7BZlTuMCAwEAAQ==";
+    //     System.out.println("publicKey = " + publicKey);
+    //     System.out.println("privateKey = " + privateKey);
+    //     //System.out.println(formatStr(publicKey, true));
+    //     //System.out.println(formatStr(privateKey, false));
+    //     //由前四行代码获得公、私密钥
+    //     String str = "123456";
 
 
-        // 公钥加密，私钥解密
-        String enStr1 = RSAUtils.encryptByPublic(str, publicKey); //公钥加密
-        System.out.println("公钥加密后："+enStr1);
-        String deStr1 = RSAUtils.decryptByPrivate(enStr1, privateKey);//私钥解密
-        System.out.println("私钥解密后："+deStr1);
-        // 私钥加密，公钥解密
-        String enStr2 = RSAUtils.encryptByPrivate(str, privateKey);
-        System.out.println("私钥加密后："+enStr2);
-        String deStr2 = RSAUtils.decryptByPublic(enStr2, publicKey);
-        System.out.println("公钥解密后："+deStr2);
-        // 产生签名
-        String sign = sign(enStr2, privateKey);
-        System.out.println("签名:"+sign);
-        // 验证签名
-        boolean status = verify(enStr2, publicKey, sign);
-        System.out.println("状态:"+status);
+    //     // 公钥加密，私钥解密
+    //     String enStr1 = RSAUtils.encryptByPublic(str, publicKey); //公钥加密
+    //     System.out.println("公钥加密后："+enStr1);
+    //     String deStr1 = RSAUtils.decryptByPrivate(enStr1, privateKey);//私钥解密
+    //     System.out.println("私钥解密后："+deStr1);
+    //     // 私钥加密，公钥解密
+    //     String enStr2 = RSAUtils.encryptByPrivate(str, privateKey);
+    //     System.out.println("私钥加密后："+enStr2);
+    //     String deStr2 = RSAUtils.decryptByPublic(enStr2, publicKey);
+    //     System.out.println("公钥解密后："+deStr2);
+    //     // 产生签名
+    //     String sign = sign(enStr2, privateKey);
+    //     System.out.println("签名:"+sign);
+    //     // 验证签名
+    //     boolean status = verify(enStr2, publicKey, sign);
+    //     System.out.println("状态:"+status);
 
-    }
+    // }
 
 }

@@ -2,19 +2,46 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cjk.bakend.demo.mapper.UserInformationMapper">
   <resultMap id="UserInformationMap" type="com.cjk.bakend.demo.pojo.UserInformation">
-        <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <id column="user_Information_id" jdbcType="INTEGER" property="userInformationId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="user_sex" jdbcType="INTEGER" property="userSex" />
+    <result column="user_age" jdbcType="INTEGER" property="userAge" />
+    <result column="user_mail" jdbcType="VARCHAR" property="userEmail" />
+        
   </resultMap>
 
 
   <sql id="Base_Column_List">
-    user_name
+    user_name,user_sex,user_age,user_mail
   </sql>
 
   <select id="selectUserInformationByUserId" parameterType="INTEGER" resultMap="UserInformationMap">
-    select user_name from user_Information where user_id = #{user_id}
+    select
+    <include refid="Base_Column_List"/>
+    from user_Information where user_id = #{user_id}
   </select>
 
-  <insert id="insertByPrimaryKey" resultMap="UserInformationMap" parameterType="Long">
-    insert into user_Information (user_name,user_id) values ('用户'+#{user_id},#{user_id})
+  <insert id="insertByPrimaryKey"  parameterType="Long">
+    insert into user_Information (user_name,user_id) values (concat('用户',#{userId}),#{userId})
   </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.cjk.bakend.demo.pojo.UserInformation">
+    update user_Information
+      <set>
+        <if test="userName!=null">
+          user_name = #{userName},
+        </if>
+        <if test="userName!=null">
+          user_sex = #{userSex},
+        </if>
+        <if test="userName!=null">
+          user_age = #{userAge},
+        </if>
+        <if test="userName!=null">
+          user_mail = #{userEmail},
+        </if>
+      </set>
+      where user_Information_id = #{userInformationId}
+  </update>
+  
 </mapper>
